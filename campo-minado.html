@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: #16a085">
+    <center>
+        <div class="entrada">
+                <p>Bem vindo ao MINEFIELD 2.0!<img src="imgs/bomba.png"></p>
+               <!-- <div class="nome">Seu nome: <input class="nameUser" id="name" type="text" value=""></div>-->
+                <br>
+                <div class="iniciar" onclick="inicioDeJogo()">JOGAR!</div>
+                
+        </div>
+    <div style="width: 200px; height: 200px;margin-top:100px;" id="game">
+    </div>
+    </center>
+   <script>
+       var area = document.getElementById("game");
+       var bloco = [62];
+       
+       function inicioDeJogo(){
+       // area.innerHTML = nomeDeususario;
+
+       function OrganizandoJogo(){
+            var z = 0;
+            for(var i=0;i<=6;i++){
+                for(var k=0;k<=8;k++){
+            
+           
+                    if(bloco[z]==10){
+                        area.innerHTML += "<div style='width: 20px;height: 20px;background: url(imgs/bomba.png);background-repeat: no-repeat;float:left;margin-left:2px;margin-top:2px;border-radius:3px;z-index:-10;'></div>";
+                    }else if(bloco[z]==0){
+                        area.innerHTML += "<div style='width: 20px;height: 20px;background: #95a5a6;float:left;margin-left:2px;border-radius:3px;margin-top:2px;z-index:-11;'></div>";
+                    }else{
+                        area.innerHTML += "<div style='font-family:Arial;width: 20px;height: 20px;float:left;margin-left:2px;margin-top:2px; z-index:-12;border-radius:3px;'>"+bloco[z]+"</div>";
+
+                    }
+                    z++;
+
+                    
+
+                 }
+             }
+        }
+
+        function OrganizandoJogo2(){
+            var id=0;
+            var r=1;
+            var s = 1;
+            for(var i=0;i<=6;i++){
+                for(var k=0;k<=8;k++){
+            
+           
+                    
+                        area.innerHTML += "<div onclick='visibilidade("+id+")' id='"+id+"' style='visibility:visible;border-radius:3px;width: 20px;height: 20px;background: orange;position:absolute;float:left;left:"+ ((r*22)+563) +"px;top:"+((s*22)+213-22)+"px'></div>";
+                    
+                   
+                    id++;
+                    r++;
+
+                 }
+                 r=1;
+                 s++;
+             }
+        }
+        OrganizandoJogo();
+        OrganizandoJogo2();
+       }
+       
+        function alocandoBombas(){
+            var limiteDeBombas = 10;
+            var k = 0;
+
+            for(var i=0;i<10;){
+                var condicaoDeBomba;
+                
+                var x = Math.floor(Math.random()*10);
+                if(x<2){
+                    var condicaoDeBomba = true;
+                    limiteDeBombas++;
+                    i++;
+                }else{
+                    var condicaoDeBomba = false;
+                }
+
+                bloco[k] = condicaoDeBomba;
+                //console.log(bloco[k], k);
+                //console.log(x);
+
+                k++;
+
+                //if(k>62){
+                   // alocandoBombas();
+               // }
+                //console.log(condicaoDeBomba, x);
+
+            }
+
+        }
+
+        function alocandoVazio(){
+            var k=0;
+            for(var i=0;i<63;i++){
+                    if(bloco[i]!=10){
+                    if(k==0){
+                        if(bloco[i+1]!=true && bloco[i]!=true && bloco[i+9]!=true && bloco[i+10]!=true && bloco[i-9]!=true && bloco[i-8]!=true){
+                            bloco[i]=0;
+                        }
+                    }
+                    if(k==8){
+                        if(bloco[i-1]!=true && bloco[i]!=true && bloco[i+9]!=true && bloco[i+8]!=true && bloco[i-9]!=true && bloco[i-10]!=true){
+                            bloco[i]=0;
+                        }
+                        
+                    }
+                    if(bloco[i-1]!=true && bloco[i+1]!=true && bloco[i]!=true && bloco[i+9]!=true && bloco[i+8]!=true && bloco[i+10]!=true && bloco[i-9]!=true && bloco[i-8]!=true && bloco[i-10]!=true){
+                        bloco[i]=0;
+                    }
+                }
+               
+                if(k==8){
+                    k=0;
+                }else{
+                    k++;
+                }
+
+                
+            }
+
+        }
+
+        function definirAzulComoZero(){
+            for(var i=0;i<63;i++){
+                if(bloco[i]!= 20 && bloco[i]!=true){
+                    bloco[i]=0;
+                }
+            }
+        }
+
+        function definirVermelhoComoZero(){
+            for(var i=0;i<63;i++){
+                if(bloco[i]==20){
+                    bloco[i]=0;
+                }
+            }
+        }
+
+        function definirBombaComoDez(){
+            for(var i=0;i<63;i++){
+                if(bloco[i]==true){
+                    bloco[i]=10;
+                }
+            }
+        }
+
+        function alocandoNumeros(){
+            //for(var i=0;i<63;i++){
+                //console.log(bloco[i]);
+                //var soma = bloco[i-1]/10 + bloco[i+1]/10 + bloco[i-9]/10 + bloco[i+9]/10 + bloco[i-8]/10 + bloco[i+8]/10 + bloco[i-10]/10 + bloco[i+10]/10;
+                //bloco[i]= parseInt(bloco[i-1])/10 + parseInt(bloco[i+1])/10 + parseInt(bloco[i-9])/10 + parseInt(bloco[i+9])/10 + parseInt(bloco[i-8])/10 + parseInt(bloco[i+8])/10 + parseInt(bloco[i-10])/10 + parseInt(bloco[i-10])/10;
+              //  console.log(bloco[i]);
+            //}
+            var k = 0;
+            for(var i=0;i<63;i++){
+                
+                if(i>=9 && i<53){
+                    if(bloco[i]==10){
+                        if(k==8){
+                            k=0;
+                        }else{
+                            k++;
+                        }
+                    }else{
+                        if(k==0){
+                            bloco[i]= (bloco[i+1]/10) + (bloco[i-8]/10) + (bloco[i-9]/10) + (bloco[i+9]/10) + (bloco[i+10]/10);
+                            
+                            console.log(bloco[i],i,k); 
+                        }else if(k==8){
+                            bloco[i] = (bloco[i-1]/10) + (bloco[i+8]/10) + (bloco[i+9]/10) + (bloco[i-9]/10) + (bloco[i-10]/10);
+                            console.log(bloco[i],i,k); 
+                            k=0;
+                        }else{
+                            bloco[i] = (bloco[i-1]/10) + (bloco[i+1]/10) + (bloco[i-9]/10) + (bloco[i+9]/10) + (bloco[i-8]/10) + (bloco[i+8]/10) + (bloco[i-10]/10) + (bloco[i+10]/10);
+                            k++;
+                        }
+                    }
+                    
+                }else{
+
+                
+                    if(i==0 && bloco[i]!=10){
+                        bloco[i]= (bloco[i+1]/10) + (bloco[i+9]/10) + (bloco[i+10]/10);
+                    }else if(i==8 && bloco[i]!=10){
+                        bloco[i]= (bloco[i-1]/10) + (bloco[i+8]/10) + (bloco[i+9]/10);
+                    }else if(i==54 && bloco[i]!=10){
+                        bloco[i]= (bloco[i+1]/10) + (bloco[i-8]/10) + (bloco[i-9]/10);
+                    }else if(i==62 && bloco[i]!=10){
+                        bloco[i]= (bloco[i-1]/10) + (bloco[i-9]/10) + (bloco[i-10]/10);
+                    }else if(i>0 && i<9 && bloco[i]!=10){
+                        bloco[i]= (bloco[i-1]/10) + (bloco[i+1]/10) + (bloco[i+8]/10) + (bloco[i+9]/10) + (bloco[i+10]/10);
+                    }else if(i>=54 && i<62 && bloco[i]!=10){
+                        bloco[i]= (bloco[i-1]/10) + (bloco[i+1]/10) + (bloco[i-8]/10) + (bloco[i-9]/10) + (bloco[i-10]/10);
+                    }
+                }
+
+                  //  if(k==8){
+              //         k=0;
+               ////     }else{
+                //        k++;
+                //    }
+                //console.log(bloco[i],i,k); 
+                bloco[i]= Math.floor(bloco[i]);
+               
+            }
+        }
+
+        
+
+        function visibilidade(id){
+             //e.preventDefault();
+            //var i = parseInt(id);
+           // document.getElementById(id).style.visibility = "hidden";
+           var v = 0;
+           for(var i=1;i<63;i++){
+               if(document.getElementById(i).style.visibility!="hidden" ){
+                   v++;
+               }
+               console.log(v);
+           }
+
+           if(v==10){
+               alert("Você Ganhou!!! Parabéns!");
+           }else if(v!=10){
+               v==0;
+           if(bloco[id]==0){
+           for(var k=id;k!=-1 && bloco[k]==0;k--){
+             if(bloco[k]==0){
+                    document.getElementById(k).style.visibility = "hidden"; 
+                    //document.getElementById(id-1).style.visibility = "hidden"; 
+               }
+
+               if(bloco[k-9]==0){
+                   for(var t=k;t>=0 && bloco[t]==0;t=t-9){
+                       
+                    document.getElementById(t).style.visibility = "hidden"; 
+                   }
+               }
+               
+           }
+
+
+           for(var s = id;s!=63 && bloco[s]==0;s++){
+            if(bloco[s]==0){
+                    document.getElementById(s).style.visibility = "hidden"; 
+                    
+               }
+
+               if(bloco[s+9]==0){
+                   for(var t=s;t<=62 && bloco[t]==0;t=t+9){
+                       
+                    document.getElementById(t).style.visibility = "hidden"; 
+                   }
+               }
+
+           }
+           }
+           if(bloco[id]!=0 && bloco[id]!=10){
+            document.getElementById(id).style.visibility = "hidden";
+           }
+
+           if(bloco[id]==10){
+                document.getElementById(id).style.visibility = "hidden";
+                setTimeout(myFunction, 200)
+               function myFunction(){
+                   var confirmacao = confirm("Você perdeu :( \n Tente novamente!");
+               if(confirmacao){
+                location.reload();
+               }
+               }
+           }
+           }
+              //console.log(bloco[i],i);
+            }
+       
+             
+            
+        
+        
+        
+
+        
+
+        alocandoBombas();
+        alocandoVazio();
+        definirAzulComoZero();
+        definirBombaComoDez();
+        //definirVermelhoComoZero();
+        alocandoNumeros();
+        
+      
+
+      // //for(var i=0;i<63;i++){
+      // console.log(bloco[i], i);
+     //  }
+
+
+   </script>
+   </center>
+</body>
+</html>
